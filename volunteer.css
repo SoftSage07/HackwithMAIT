@@ -1,52 +1,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+/* Initial body state for fade-in effect */
 body {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 1s ease, transform 1s ease;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 1s ease, transform 1s ease;
 }
 
 body.loaded {
-  opacity: 1;
-  transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
 }
 
-
-
-*{
+/* Global Reset and Font */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
 }
 
+/* Base Styles */
+body {
+    background: #f1f3f2;
+}
 
-
-a{
+a {
     text-decoration: none;
     color: #f1f3f2;
     font-size: 14px;
 }
 
-canvas{
+canvas {
     width: 100% !important;
 }
 
-img{
+img {
     object-fit: cover;
 }
 
-body{
-    background: #f1f3f2;
-}
-
-.top-container{
+/* Top Container (Header/Dashboard Summary) */
+.top-container {
     background: #031224;
     border-radius: 0 0 30px 30px;
     padding-bottom: 10px;
 }
 
-.top-container .nav{
+/* Navigation */
+.top-container .nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -54,42 +55,42 @@ body{
     border-bottom: 2px solid #1e293b;
 }
 
-.top-container .nav .logo{
+.top-container .nav .logo {
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
-.top-container .nav .logo i{
+.top-container .nav .logo i {
     color: #f1f3f2;
     font-size: 24px;
 }
 
-.top-container .nav .logo a{
+.top-container .nav .logo a {
     font-size: 16px;
 }
 
-.top-container .nav .nav-links{
+.top-container .nav .nav-links {
     display: flex;
     gap: 20px;
 }
 
-.top-container .nav .nav-links a{
+.top-container .nav .nav-links a {
     color: #ccc;
     transition: all 0.3s ease;
 }
 
-.top-container .nav .nav-links a:hover{
+.top-container .nav .nav-links a:hover {
     color: #fff;
 }
 
-.top-container .nav .right-section{
+.top-container .nav .right-section {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.top-container .nav .right-section > i{
+.top-container .nav .right-section > i {
     color: #f1f3f2;
     background: #1e293b;
     padding: 12px;
@@ -97,7 +98,7 @@ body{
     cursor: pointer;
 }
 
-.top-container .nav .right-section .profile{
+.top-container .nav .right-section .profile {
     display: flex;
     align-items: center;
     background: #1e293b;
@@ -106,402 +107,256 @@ body{
     gap: 10px;
 }
 
-.top-container .nav .right-section .profile .info{
+.top-container .nav .right-section .profile .info {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.top-container .nav .right-section .profile .info img{
+.top-container .nav .right-section .profile .info img {
     width: 32px;
     height: 32px;
     border-radius: 50%;
     border: 1px solid #f1f3f2;
 }
 
-.top-container .nav .right-section .profile .info a{
+.top-container .nav .right-section .profile .info a {
     font-size: 13px;
 }
 
-.top-container .nav .right-section .profile .info p{
+.top-container .nav .right-section .profile .info p {
     font-size: 13px;
     color: #ccc;
 }
 
-.top-container .nav .right-section .profile > i{
+.top-container .nav .right-section .profile > i {
     color: #f1f3f2;
     font-size: 22px;
     cursor: pointer;
 }
 
-.top-container .status{
+/* Status/Progress Section */
+.top-container .status {
     padding: 20px 20px 10px;
 }
 
-.top-container .status .header{
+.top-container .status .header {
     display: flex;
     align-items: center;
     width: 100%;
     margin-bottom: 20px;
 }
 
-.top-container .status .header h4{
+.top-container .status .header h4 {
     color: #f1f3f2;
     font-weight: 500;
 }
 
-.top-container .status .header h4#big{
+.top-container .status .header h4#big {
     flex: 3;
 }
 
-.top-container .status .header h4#small{
-
+.top-container .status .header h4#small {
     flex: 1;
-
     padding-left: 90px;
-
 }
 
-
-
-.top-container .status .items-list{
-
+.top-container .status .items-list {
     display: flex;
-
     align-items: center;
-
     gap: 14px;
-
 }
 
-
-
-.top-container .status .items-list .item{
-
+.top-container .status .items-list .item {
     background: #e0f2fe;
-
     width: 25%;
-
     padding: 20px;
-
     border-radius: 18px;
-
 }
 
-
-
-.top-container .status .items-list .item:nth-child(2){
-
+/* Item Variations */
+.top-container .status .items-list .item:nth-child(2) {
     background: #fffbeb;
-
 }
 
-
-
-.top-container .status .items-list .item:nth-child(3){
-
+.top-container .status .items-list .item:nth-child(3) {
     background: #bfdbfe;
-
 }
 
-
-
-.top-container .status .items-list .item:nth-child(4){
-
+.top-container .status .items-list .item:nth-child(4) {
     background: #031224;
-
     padding: 10px;
-
 }
 
-
-
-.top-container .status .items-list .item .info{
-
+.top-container .status .items-list .item .info {
     display: flex;
-
     align-items: flex-start;
-
     justify-content: space-between;
-
     margin-bottom: 40px;
-
 }
 
-
-
-.top-container .status .items-list .item .info h5{
-
+.top-container .status .items-list .item .info h5 {
     font-size: 16px;
-
     font-weight: 600;
-
     margin-bottom: 10px;
-
 }
 
-
-
-.top-container .status .items-list .item .info p{
-
+.top-container .status .items-list .item .info p {
     font-size: 12px;
-
     font-weight: 500;
-
 }
 
-
-
-.top-container .status .items-list .item .info > i{
-
+.top-container .status .items-list .item .info > i {
     font-size: 20px;
-
     padding: 10px;
-
     background: #031224;
-
     color: #f1f3f2;
-
     border-radius: 50%;
-
 }
 
-
-
-.top-container .status .items-list .item .progress{
-
+.top-container .status .items-list .item .progress {
     position: relative;
-
     height: 10px;
-
     background: #b7c0cd;
-
     border-radius: 10px;
-
 }
 
-
-
-.top-container .status .items-list .item .progress .bar{
-
+.top-container .status .items-list .item .progress .bar {
     width: 92%;
-
     height: 10px;
-
     background: #031224;
-
     border-radius: 10px;
-
 }
 
-
-
-.top-container .status .items-list .item .progress::before{
-
+.top-container .status .items-list .item .progress::before {
     content: "92%";
-
     position: absolute;
-
     top: -40px;
-
     right: 0;
-
     font-size: 22px;
-
     font-weight: 600;
-
 }
 
-
-
-.top-container .status .items-list .item:nth-child(2) .progress{
-
+/* Item 2 Progress */
+.top-container .status .items-list .item:nth-child(2) .progress {
     background: #d6d3d1;
-
 }
 
-
-
-.top-container .status .items-list .item:nth-child(2) .progress .bar{
-
+.top-container .status .items-list .item:nth-child(2) .progress .bar {
     width: 80%;
-
 }
 
-
-
-.top-container .status .items-list .item:nth-child(2) .progress::before{
-
+.top-container .status .items-list .item:nth-child(2) .progress::before {
     content: "80%";
-
 }
 
-
-
-
-
-.top-container .status .items-list .item:nth-child(3) .progress{
-
+/* Item 3 Progress */
+.top-container .status .items-list .item:nth-child(3) .progress {
     background: #94a3b8;
-
 }
 
-
-
-.top-container .status .items-list .item:nth-child(3) .progress .bar{
-
+.top-container .status .items-list .item:nth-child(3) .progress .bar {
     width: 80%;
-
 }
 
-
-
-.top-container .status .items-list .item:nth-child(3) .progress::before{
-
+.top-container .status .items-list .item:nth-child(3) .progress::before {
     content: "80%";
-
 }
 
-
-
-.bottom-container{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
-  padding: 2rem;
+/* Bottom Container (Main Content) */
+.bottom-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    padding: 2rem;
 }
 
-
-
+/* Common Card Styling */
 .bottom-container .prog-status,
 .bottom-container .popular,
-.bottom-container .upcoming{
+.bottom-container .upcoming {
     background: #fefefe;
-    padding: 20px;
+    padding: 20px; /* Base padding for all bottom cards */
     border-radius: 24px;
 }
 
-
-
-.bottom-container .prog-status{
-
+/* Program Status Card (Prog-status) - Primary Fix Area */
+.bottom-container .prog-status {
     width: 50%;
-
+    /* Removed redundant padding definition here, as it's set above */
 }
-
-
 
 .bottom-container .prog-status .header,
-
 .bottom-container .popular .header,
-
-.bottom-container .upcoming .header{
-
+.bottom-container .upcoming .header {
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     margin-bottom: 20px;
-
 }
-
-
 
 .bottom-container .prog-status .header h4,
-
 .bottom-container .popular .header h4,
-
-.bottom-container .upcoming .header h4{
-
+.bottom-container .upcoming .header h4 {
     font-weight: 600;
-
 }
 
-
-
-.bottom-container .prog-status .header .tabs{
-
+/* Prog-Status Tabs */
+.bottom-container .prog-status .header .tabs {
     background: #f3f3f3;
-
     padding: 4px;
-
     border-radius: 20px;
-
     display: flex;
-
     gap: 5px;
-
 }
 
-
-
-.bottom-container .prog-status .header .tabs a{
-
+.bottom-container .prog-status .header .tabs a {
     padding: 4px 20px;
-
     font-size: 12px;
-
     color: #000;
-
     border-radius: 20px;
-
     font-weight: 600;
-
 }
 
-
-
-.bottom-container .prog-status .header .tabs a.active{
+.bottom-container .prog-status .header .tabs a.active {
     background: #fff;
 }
 
-.bottom-container .prog-status .details{
-
+/* Prog-Status Details */
+.bottom-container .prog-status .details {
     display: flex;
-
     margin-bottom: 30px;
-
     gap: 20px;
-
 }
 
-
-
-.bottom-container .prog-status .details .item h2{
-
+.bottom-container .prog-status .details .item h2 {
     font-size: 30px;
-
     font-weight: 400;
-
 }
 
-.bottom-container .prog-status .details .item p{
+.bottom-container .prog-status .details .item p {
     font-size: 13px;
     color: #9b9b9b;
 }
 
-.bottom-container .prog-status .details .separator{
+.bottom-container .prog-status .details .separator {
     width: 2px;
     height: 70px;
     background: #f3f3f3;
 }
 
-.bottom-container .popular{
+/* Popular Card */
+.bottom-container .popular {
     width: 25%;
 }
 
-.bottom-container .popular .header{
-    margin-bottom: 40px;
-}
-.bottom-container .upcoming .header{
+.bottom-container .popular .header {
     margin-bottom: 40px;
 }
 
 .bottom-container .popular .header a,
-.bottom-container .upcoming .header a{
+.bottom-container .upcoming .header a {
     font-size: 12px;
     color: #000;
     font-weight: 600;
@@ -510,47 +365,47 @@ body{
     border-radius: 20px;
 }
 
-.bottom-container .popular > img{
+.bottom-container .popular > img {
     width: 100%;
     aspect-ratio: 16/9;
     border-radius: 20px;
     margin-bottom: 20px;
 }
 
-.bottom-container .popular .audio{
+.bottom-container .popular .audio {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 20px;
 }
 
-.bottom-container .popular .audio i{
+.bottom-container .popular .audio i {
     font-size: 26px;
     background: #eff6ff;
     padding: 6px;
     border-radius: 50%;
 }
 
-.bottom-container .popular .audio a{
+.bottom-container .popular .audio a {
     font-size: 15px;
     font-weight: 600;
     color: #000;
     line-height: 18px;
 }
 
-.bottom-container .popular > p{
+.bottom-container .popular > p {
     font-size: 14px;
     font-weight: 500;
     margin-bottom: 50px;
 }
 
-.bottom-container .popular .listen{
+.bottom-container .popular .listen {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.bottom-container .popular .listen .author{
+.bottom-container .popular .listen .author {
     padding: 6px 10px;
     background: #f3f3f3;
     display: flex;
@@ -559,23 +414,23 @@ body{
     border-radius: 10px;
 }
 
-.bottom-container .popular .listen .author img{
+.bottom-container .popular .listen .author img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
 }
 
-.bottom-container .popular .listen .author a{
+.bottom-container .popular .listen .author a {
     font-size: 14px;
     color: #000;
 }
 
-.bottom-container .popular .listen .author p{
+.bottom-container .popular .listen .author p {
     font-size: 12px;
     color: #9b9b9b;
 }
 
-.bottom-container .popular .listen button{
+.bottom-container .popular .listen button {
     border: none;
     color: #fff;
     background: #031224;
@@ -587,35 +442,37 @@ body{
     cursor: pointer;
 }
 
-
-.bottom-container .popular .listen button i{
+.bottom-container .popular .listen button i {
     font-size: 16px;
 }
 
-.bottom-container .upcoming{
+/* Upcoming Card */
+.bottom-container .upcoming {
     width: 25%;
 }
 
-.bottom-container .upcoming .dates{
+.bottom-container .upcoming .header {
+    margin-bottom: 40px;
+}
+
+.bottom-container .upcoming .dates {
     display: flex;
     justify-content: space-between;
     margin-bottom: 40px;
 }
 
-
-
-.bottom-container .upcoming .dates .item{
+.bottom-container .upcoming .dates .item {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 6px;
 }
 
-.bottom-container .upcoming .dates .item h5{
+.bottom-container .upcoming .dates .item h5 {
     font-weight: 600;
 }
 
-.bottom-container .upcoming .dates .item a{
+.bottom-container .upcoming .dates .item a {
     color: #000;
     font-size: 13px;
     padding: 5px 9px;
@@ -625,18 +482,18 @@ body{
 }
 
 .bottom-container .upcoming .dates .item.active a,
-.bottom-container .upcoming .dates .item a:hover{
+.bottom-container .upcoming .dates .item a:hover {
     color: #fff;
     background: #031224;
 }
 
-.bottom-container .upcoming .events{
+.bottom-container .upcoming .events {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.bottom-container .upcoming .events .item{
+.bottom-container .upcoming .events .item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -645,151 +502,38 @@ body{
     border-radius: 10px;
 }
 
-.bottom-container .upcoming .events .item > i{
+.bottom-container .upcoming .events .item > i {
     cursor: pointer;
 }
 
-.bottom-container .upcoming .events .item > div{
+.bottom-container .upcoming .events .item > div {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.bottom-container .upcoming .events .item > div i{
+.bottom-container .upcoming .events .item > div i {
     font-size: 30px;
+    color: #f97316; /* orange for problem icon */
 }
 
-.bottom-container .upcoming .events .item .event-info a{
+.bottom-container .upcoming .events .item .event-info a {
     font-size: 14px;
     color: #000;
     font-weight: 500;
 }
 
-.bottom-container .upcoming .events .item .event-info p{
+.bottom-container .upcoming .events .item .event-info p {
     font-size: 13px;
     color: #9b9b9b;
 }
 
-@media screen and (max-width: 1300px) {
-
-    .bottom-container .popular .audio a{
-        margin-bottom: 20px;
-        font-size: 12px;
-    }
-
-    .bottom-container .popular > p{
-        margin-bottom: 20px;
-        font-size: 12px;
-    }
-
-    .bottom-container .popular .listen{
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .bottom-container .popular .listen .author{
-        width: 100%;
-    }
-
-    .bottom-container .popular .listen button{
-        width: 100%;
-        justify-content: center;
-    }
-
-    .bottom-container .upcoming .events .item{
-        padding: 6px 10px;
-    }
-
-    .bottom-container .upcoming .events .item > div i{
-        font-size: 20px;
-    }
-
-    .bottom-container .upcoming .events .item .event-info a{
-        font-size: 13px;
-    }
-
-    .bottom-container .upcoming .events .item .event-info p{
-        font-size: 12px;
-    }
+.bottom-container .upcoming .events .item .event-info p:last-child {
+    font-weight: 600;
+    color: #0891b2;
 }
 
-@media screen and (max-width: 1080px) {
-
-    .top-container .nav .right-section .profile{
-        padding: 5px;
-    }
-
-    .top-container .nav .right-section .profile .info p,
-    .top-container .status .header h4#small{
-        display: none;
-    }
-
-    .top-container .status .items-list{
-        flex-wrap: wrap;
-    }
-
-    .top-container .status .items-list .item{
-        width: 48%;
-    }
-
-    .bottom-container{
-        flex-wrap: wrap;
-    }
-
-    .bottom-container .prog-status{
-        width: 100%;
-    }
-    .bottom-container .popular,
-    .bottom-container .upcoming{
-        width: 48%;
-    }
-
-    .bottom-container .popular .audio a{
-        font-size: 15px;
-    }
-
-    .bottom-container .popular > p{
-        font-size: 14px;
-        margin-bottom: 40px;
-    }
-
-    .bottom-container .popular .listen{
-        flex-direction: row;
-    }
-
-    .bottom-container .popular .listen button{
-        width: 50%;
-    }
-    .bottom-container .upcoming .events .item{
-        padding: 10px;
-    }
-    .bottom-container .upcoming .events .item > div i{
-        font-size: 30px;
-    }
-
-    .bottom-container .upcoming .events .item .event-info a{
-        font-size: 14px;
-    }
-}
-
-
-@media screen and (max-width: 768px) {
-
-    .top-container .nav{
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .top-container .status .items-list .item .info h5{
-       font-size: 15px;
-    }
-
-    .bottom-container .popular,
-    .bottom-container .upcoming{
-        width: 100%;
-    }
-}
-
+/* Other Sections */
 .certificates, .lors, .meeting-schedule {
     margin-top: 30px;
 }
@@ -833,6 +577,7 @@ body{
     align-items: center;
 }
 
+/* Meeting Schedule Table */
 .meeting-schedule table {
     width: 100%;
     border-collapse: collapse;
@@ -851,6 +596,7 @@ body{
     font-weight: 600;
 }
 
+/* Community Forum/Chat */
 #community-forum {
     background: #fefefe;
     padding: 20px;
@@ -916,12 +662,190 @@ body{
     text-align: right;
 }
 
-.upcoming .events .item > div i {
-    font-size: 30px;
-    color: #f97316; /* orange for problem icon */
+/* Resources Section with Scroll */
+.resources {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    max-height: 300px; 
+    overflow-y: auto; 
+    padding-right: 10px; 
 }
 
-.upcoming .events .item .event-info p:last-child {
-    font-weight: 600;
-    color: #0891b2;
+.resources::-webkit-scrollbar {
+    width: 8px;
+}
+
+.resources::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+}
+
+.resources::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
+/* Modal for Image Display */
+#image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+#modal-image {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 900px;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+#modal-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+/* Utility Class */
+.certificates-hidden {
+    display: none;
+}
+
+/* --- Media Queries --- */
+
+@media screen and (max-width: 1300px) {
+
+    .bottom-container .popular .audio a {
+        margin-bottom: 20px;
+        font-size: 12px;
+    }
+
+    .bottom-container .popular > p {
+        margin-bottom: 20px;
+        font-size: 12px;
+    }
+
+    .bottom-container .popular .listen {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .bottom-container .popular .listen .author {
+        width: 100%;
+    }
+
+    .bottom-container .popular .listen button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .bottom-container .upcoming .events .item {
+        padding: 6px 10px;
+    }
+
+    .bottom-container .upcoming .events .item > div i {
+        font-size: 20px;
+    }
+
+    .bottom-container .upcoming .events .item .event-info a {
+        font-size: 13px;
+    }
+
+    .bottom-container .upcoming .events .item .event-info p {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 1080px) {
+
+    .top-container .nav .right-section .profile {
+        padding: 5px;
+    }
+
+    .top-container .nav .right-section .profile .info p,
+    .top-container .status .header h4#small {
+        display: none;
+    }
+
+    .top-container .status .items-list {
+        flex-wrap: wrap;
+    }
+
+    .top-container .status .items-list .item {
+        width: 48%;
+    }
+
+    .bottom-container {
+        flex-wrap: wrap;
+    }
+
+    .bottom-container .prog-status {
+        width: 100%;
+        padding-bottom: 30px;
+    }
+
+    .bottom-container .popular,
+    .bottom-container .upcoming {
+        width: 48%;
+    }
+
+    .bottom-container .popular .audio a {
+        font-size: 15px;
+    }
+
+    .bottom-container .popular > p {
+        font-size: 14px;
+        margin-bottom: 40px;
+    }
+
+    .bottom-container .popular .listen {
+        flex-direction: row;
+    }
+
+    .bottom-container .popular .listen button {
+        width: 50%;
+    }
+
+    .bottom-container .upcoming .events .item {
+        padding: 10px;
+    }
+
+    .bottom-container .upcoming .events .item > div i {
+        font-size: 30px;
+    }
+
+    .bottom-container .upcoming .events .item .event-info a {
+        font-size: 14px;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+
+    .top-container .nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .top-container .status .items-list .item .info h5 {
+        font-size: 15px;
+    }
+
+    .bottom-container .popular,
+    .bottom-container .upcoming {
+        width: 100%;
+    }
 }

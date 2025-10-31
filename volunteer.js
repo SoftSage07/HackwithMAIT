@@ -57,7 +57,7 @@ const YOUTUBE_API_KEY = 'AIzaSyC8dC0zUnZ0zPu7H4iVulFwHFXHHqCwBMs';
 
 // CORRECTION: Broadened default search query to guarantee results
 const DEFAULT_SEARCH_QUERY = 'volunteer training'; 
-const MAX_RESULTS = 5; 
+const MAX_RESULTS = 2; 
 
 // Array of random, relevant modifiers to ensure search results change
 const RANDOM_MODIFIERS = ['guide', 'tips', 'tutorial', 'workshop', 'webinar', 'latest', 'expert'];
@@ -237,3 +237,44 @@ window.onload = function() {
 
     initializeActivityChart(); 
 };
+
+/**
+ * Handles showing the certificate image in a modal.
+ * @param {string} imageUrl - The URL of the certificate image.
+ */
+function showCertificate(imageUrl) {
+    const modal = document.getElementById('image-modal');
+    const modalImage = document.getElementById('modal-image');
+    
+    modalImage.src = imageUrl;
+    modal.style.display = "block";
+}
+
+// Function to attach event listeners to the "View Certificate" buttons
+function initializeCertificateListeners() {
+    const viewButtons = document.querySelectorAll('.certificates-hidden button');
+    const modal = document.getElementById('image-modal');
+    const closeButton = document.getElementById('modal-close');
+
+    viewButtons.forEach(button => {
+        const imageUrl = button.getAttribute('data-image-url');
+        button.addEventListener('click', () => {
+            showCertificate(imageUrl);
+        });
+    });
+
+    // Close the modal when the user clicks on (x)
+    closeButton.addEventListener('click', () => {
+        modal.style.display = "none";
+    });
+
+    // Close the modal when the user clicks anywhere outside of the image
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+}
+
+// Add this function call to your existing window.onload function:
+// window.onload = function() { ... initializeCertificateListeners(); ... };

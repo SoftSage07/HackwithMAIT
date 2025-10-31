@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 
 <head>
@@ -7,6 +7,49 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="volunteer.css">
     <title>Volunteer-Hub</title>
+    <style>
+        /* Minimal fix: auto height + modal support */
+        .prog-status {
+            height: auto;
+            max-height: none;
+        }
+
+        #image-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            padding-top: 80px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            text-align: center;
+        }
+
+        #modal-image {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            border-radius: 10px;
+        }
+
+        #modal-close {
+            position: absolute;
+            top: 30px;
+            right: 50px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #modal-close:hover {
+            color: #aaa;
+        }
+    </style>
 </head>
 
 <body>
@@ -42,7 +85,6 @@
                     <i class='bx bx-chevron-down'></i>
                 </div>
             </div>
-
         </div>
 
         <div class="status">
@@ -95,14 +137,13 @@
                     <canvas class="activity-chart"></canvas>
                 </div>
             </div>
-
         </div>
-
     </div>
 
 
     <div class="bottom-container">
 
+        <!-- Volunteer Credentials -->
         <div class="prog-status">
             <div class="header">
                 <h4>Volunteer Credentials</h4>
@@ -124,13 +165,18 @@
                 <div class="card">
                     <h5>Community Outreach Excellence</h5>
                     <p>Issued: March 2025</p>
-                    <button data-image-url="images/certificate2">View Certificate</button>
+                    <button data-image-url="images/certificate1.jpg" class="view-cert">View Certificate</button>
                 </div>
                 <div class="card">
                     <h5>Leadership in Inclusion</h5>
                     <p>Issued: June 2025</p>
-                    <button data-image-url="images/certificate2">View Certificate</button>
+                    <button data-image-url="images/certificate2.jpg" class="view-cert">View Certificate</button>
                 </div>
+            </div>
+
+            <div id="image-modal">
+                <span id="modal-close">&times;</span>
+                <img id="modal-image" src="" alt="Certificate Image">
             </div>
 
             <div class="lors">
@@ -177,8 +223,6 @@
                 </table>
             </div>
         </div>
-
-
        <div class="popular">
             <div class="header">
                 <h4>Popular Resources</h4>
@@ -191,8 +235,8 @@
         </div>
 
 
+        <!-- Problems Raised -->
         <div class="upcoming">
-
             <div class="header">
                 <h4>Problems Raised</h4>
                 <a href="#">October <i class='bx bx-chevron-down'></i></a>
@@ -267,46 +311,62 @@
                     <i class='bx bx-dots-horizontal-rounded'></i>
                 </div>
             </div>
-
         </div>
 
-            <!-- Community Forum Section -->
-            <section id="community-forum" class="py-5 bg-light">
+        <!-- Community Forum (Chat Section) -->
+        <section id="community-forum" class="py-5 bg-light">
             <div class="container">
                 <h2 class="text-center mb-4">Chats</h2>
                 <div class="chat-container">
-            <div class="message pwd">
-                Hi, I need help crossing the park safely.
-                <span class="time">10:02 AM</span>
+                    <div class="message pwd">
+                        Hi, I need help crossing the park safely.
+                        <span class="time">10:02 AM</span>
+                    </div>
+                    <div class="message volunteer">
+                        Sure! I’m nearby and will guide you in 5 mins.
+                        <span class="time">10:03 AM</span>
+                    </div>
+                    <div class="message pwd">
+                        Thank you so much! Also, can you help with groceries later?
+                        <span class="time">10:05 AM</span>
+                    </div>
+                    <div class="message volunteer">
+                        Absolutely! We’ll coordinate the timing.
+                        <span class="time">10:06 AM</span>
+                    </div>
+                </div>
             </div>
-            <div class="message volunteer">
-                Sure! I’m nearby and will guide you in 5 mins.
-                <span class="time">10:03 AM</span>
-            </div>
-            <div class="message pwd">
-                Thank you so much! Also, can you help with groceries later?
-                <span class="time">10:05 AM</span>
-            </div>
-            <div class="message volunteer">
-                Absolutely! We’ll coordinate the timing.
-                <span class="time">10:06 AM</span>
-            </div>
-            </div>
-
-            </div>
-            </section>
-
-        </div>
-
+        </section>
     </div>
 
-
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // fix: view certificate button opens modal
+        document.querySelectorAll('.view-cert').forEach(button => {
+            button.addEventListener('click', () => {
+                const imgUrl = button.getAttribute('data-image-url');
+                const modal = document.getElementById('image-modal');
+                const modalImg = document.getElementById('modal-image');
+                modal.style.display = 'block';
+                modalImg.src = imgUrl;
+            });
+        });
+
+        document.getElementById('modal-close').addEventListener('click', () => {
+            document.getElementById('image-modal').style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            const modal = document.getElementById('image-modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
     <script src="volunteer.js"></script>
 
 </body>
-
 </html>
+
 
 
