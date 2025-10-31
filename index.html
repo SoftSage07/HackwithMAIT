@@ -190,7 +190,7 @@
       margin-top: 1rem;
       font-size: 0.9rem;
     }
-
+ 
     .signup a {
       color: #ddd;
       text-decoration: underline;
@@ -266,29 +266,8 @@
     </div>
   </div>
 
-  <script>
-    const memberBtn = document.getElementById("memberBtn");
-    const volunteerBtn = document.getElementById("volunteerBtn");
-    const loginForm = document.getElementById("loginForm");
-
-    memberBtn.addEventListener("click", () => {
-      memberBtn.classList.add("active");
-      volunteerBtn.classList.remove("active");
-    });
-
-    volunteerBtn.addEventListener("click", () => {
-      volunteerBtn.classList.add("active");
-      memberBtn.classList.remove("active");
-    });
-
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      if (volunteerBtn.classList.contains("active")) {
-        window.location.href = "volunteer.html";
-      } else {
-        window.location.href = "memberssss.html";
-      }
-    });
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+  <script src="index.js">
   </script>
 </body>
 </html>
