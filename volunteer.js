@@ -1,52 +1,7 @@
 const ctx = document.querySelector('.activity-chart');
 
-new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-        datasets: [{
-            label: 'Time',
-            data: [3, 1.4, 2.5, 4, 3, 2, 4],
-            backgroundColor: '#1e293b',
-            borderWidth: 3,
-            borderRadius: 6,
-            hoverBackgroundColor: '#60a5fa'
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            x: {
-                border: {
-                    display: true
-                },
-                grid: {
-                    display: true,
-                    color: '#1e293b'
-                }
-            },
-            y: {
-                ticks: {
-                    display: false
-                }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        animation: {
-            duration: 1000,
-            easing: 'easeInOutQuad',
-        }
-    }
-});
-
-window.addEventListener("load", () => {
-document.body.classList.add("loaded");
-});
+// CORRECTION: The scattered chart initialisation code block that started here in the original
+// prompt was removed because it was redundant and overwritten by initializeActivityChart() later.
 
 // =================================================================
 // 🚀 AI AUTO-SEARCH FOR RELATED VIDEOS (YOUTUBE DATA API)
@@ -55,9 +10,10 @@ document.body.classList.add("loaded");
 // Your provided YouTube Data API Key
 const YOUTUBE_API_KEY = 'AIzaSyC8dC0zUnZ0zPu7H4iVulFwHFXHHqCwBMs';
 
-// CORRECTION: Broadened default search query to guarantee results
-const DEFAULT_SEARCH_QUERY = 'volunteer training'; 
-const MAX_RESULTS = 5; 
+// Broadened default search query to guarantee results
+const DEFAULT_SEARCH_QUERY = 'volunteer training';
+
+// CORRECTION: Removed duplicate const declaration.
 const MAX_RESULTS = 2; 
 
 // Array of random, relevant modifiers to ensure search results change
@@ -68,7 +24,7 @@ const RANDOM_MODIFIERS = ['guide', 'tips', 'tutorial', 'workshop', 'webinar', 'l
  * @param {string} query - The search term provided by the user or the default.
  */
 async function fetchRelatedVideos(query) {
-    let finalQuery = query; // Use the query passed from handleSearch, which might be null
+    let finalQuery = query; 
 
     // LOGIC: If 'query' is null (meaning it's the initial page load), we use the randomized default.
     if (!query) {
@@ -107,9 +63,6 @@ function handleSearch() {
     const inputElement = document.getElementById('resource-search-input');
     // Get the value from the search box
     const userQuery = inputElement.value.trim();
-
-    // When the user searches, we do NOT use the random modifier.
-    // Pass the userQuery (which might be an empty string if they click without typing)
     fetchRelatedVideos(userQuery);
 }
 
@@ -125,7 +78,6 @@ function renderVideos(videos) {
     container.innerHTML = ''; 
 
     if (videos.length === 0) {
-        // If no videos are found, fall back to a simple, high-traffic query for the next load
         container.innerHTML = '<p style="text-align: center; color: #777; padding: 20px;">No specific videos found. Try a different search, or reload for general topics.</p>';
         return;
     }
@@ -134,7 +86,6 @@ function renderVideos(videos) {
         const videoId = video.id.videoId;
         const title = video.snippet.title;
         const channelName = video.snippet.channelTitle;
-        // Truncate and clean up the description
         let description = video.snippet.description.replace(/\n/g, ' ').substring(0, 100).trim();
         if (video.snippet.description.length > 100) {
             description += '...';
@@ -146,7 +97,7 @@ function renderVideos(videos) {
         // Build the HTML structure for each video resource
         const resourceHTML = `
             <img src="${thumbnailUrl}" alt="${title}" style="width: 100%; border-radius: 8px; margin-top: 15px;">
-            <div class="audio" style="display: flex; align-items: center; margin-top: 10px;">
+            <div class="audio" style="display: flex; align-items: center; margin-left: 10px;">
                 <i class='bx bx-video' style="font-size: 20px; color: #e74c3c;"></i>
                 <a href="${videoUrl}" target="_blank" title="${title}" style="margin-left: 8px; font-weight: bold;">Video: ${title}</a>
             </div>
@@ -171,7 +122,7 @@ function renderVideos(videos) {
 }
 
 // =================================================================
-// 📊 CHART.JS IMPLEMENTATION (This remains the same)
+// 📊 CHART.JS IMPLEMENTATION
 // =================================================================
 
 function initializeActivityChart() {
@@ -228,18 +179,6 @@ function initializeActivityChart() {
 }
 
 
-// Call functions when the page loads
-window.onload = function() {
-    // 1. Initial load: Fetch videos automatically using the dynamic/randomized query (pass null)
-    fetchRelatedVideos(null); 
-
-    // 2. Set up the event listener for the search button
-    document.getElementById('resource-search-button').addEventListener('click', handleSearch);
-
-    initializeActivityChart(); 
-};
-};
-
 /**
  * Handles showing the certificate image in a modal.
  * @param {string} imageUrl - The URL of the certificate image.
@@ -248,8 +187,12 @@ function showCertificate(imageUrl) {
     const modal = document.getElementById('image-modal');
     const modalImage = document.getElementById('modal-image');
     
-    modalImage.src = imageUrl;
-    modal.style.display = "block";
+    if (modal && modalImage) {
+        modalImage.src = imageUrl;
+        modal.style.display = "block";
+    } else {
+        console.error("Modal elements 'image-modal' or 'modal-image' not found.");
+    }
 }
 
 // Function to attach event listeners to the "View Certificate" buttons
@@ -266,9 +209,13 @@ function initializeCertificateListeners() {
     });
 
     // Close the modal when the user clicks on (x)
-    closeButton.addEventListener('click', () => {
-        modal.style.display = "none";
-    });
+    if (closeButton) {
+        closeButton.addEventListener('click', () => {
+            if (modal) {
+                modal.style.display = "none";
+            }
+        });
+    }
 
     // Close the modal when the user clicks anywhere outside of the image
     window.addEventListener('click', (event) => {
@@ -278,5 +225,28 @@ function initializeCertificateListeners() {
     });
 }
 
-// Add this function call to your existing window.onload function:
-// window.onload = function() { ... initializeCertificateListeners(); ... };
+
+// Call functions when the page loads
+window.onload = function() {
+    // CORRECTION: Removed the extra closing brace '}' that caused a syntax error.
+    
+    // Set 'loaded' class for CSS transitions/animations
+    document.body.classList.add("loaded"); 
+
+    // 1. Initial load: Fetch videos automatically using the dynamic/randomized query (pass null)
+    fetchRelatedVideos(null); 
+
+    // 2. Set up the event listener for the search button
+    const searchButton = document.getElementById('resource-search-button');
+    if (searchButton) {
+        searchButton.addEventListener('click', handleSearch);
+    } else {
+        console.warn("Search button element with ID 'resource-search-button' not found.");
+    }
+
+    // 3. Initialize the main activity chart
+    initializeActivityChart(); 
+
+    // 4. Initialize certificate modal listeners
+    initializeCertificateListeners();
+};
