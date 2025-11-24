@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Dashboard </title>
+    <style>
+        /* BASE & LAYOUT: Combining Sidebar (Desktop) and Content (Mobile) */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+        }
+
+        /* *** KEY CHANGE 1: MAKING CONTAINER FULL-WIDTH ON ALL DEVICES *** */
+        .container {
+            width: 100%;
+            /* min-height: 100vh; <-- Removed to allow scroll past viewport height */
+            margin: 0;
+            background-color: #ffffff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            border-radius: 0;
+            overflow: hidden;
+        }
+
+        /* Desktop Container Styles */
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 1200px;
+                margin: 20px auto;
+                border-radius: 12px;
+            }
+        }
+
+        /* --- VERTICAL SIDEBAR NAVIGATION --- */
+        .nav-bar-vertical {
+            width: 220px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            padding-top: 30px;
+            background-color: #1e3a8a;
+            color: #ffffff;
+            /* CHANGES APPLIED HERE: Removing fixed height/positioning */
+            /* height: 100vh; <-- REMOVED */
+            /* position: sticky; <-- REMOVED */
+            /* top: 0; <-- REMOVED */
+            /* overflow-y: auto; <-- REMOVED */
+        }
+        
+        /* Mobile Sidebar Handling (Hidden by default) */
+        @media (max-width: 768px) {
+            .nav-bar-vertical {
+                display: none;
+            }
+            .container {
+                display: block;
+            }
+        }
+
+        /* Tablet/Desktop Sidebar Handling (Visible) */
+        @media (min-width: 769px) {
+            .nav-bar-vertical {
+                display: flex;
+            }
+            .container {
+                display: flex;
+            }
+        }
+
+        .nav-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: left;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        .nav-item-vertical {
+            text-align: left;
+            color: #d1d5db;
+            font-size: 1em;
+            text-decoration: none;
+            padding: 15px 20px;
+            transition: background-color 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            border-left: 5px solid transparent;
+        }
+        .nav-item-vertical:hover {
+            background-color: #3b5998;
+            color: #ffffff;
+        }
+        .nav-item-vertical.active {
+            color: #ffffff;
+            background-color: #3b82f6;
+            font-weight: bold;
+            border-left: 5px solid #ffffff;
+        }
+        .nav-icon-vertical {
+            font-size: 1.2em;
+            margin-right: 15px;
+            display: inline-block;
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        .main-content {
+            flex-grow: 1;
+            width: 100%;
+            /* CHANGES APPLIED HERE: Removing fixed height/scrolling */
+            /* overflow-y: auto; <-- REMOVED */
+            /* max-height: 100vh; <-- REMOVED */
+        }
+
+
+        /* Header (Greeting) Style */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(to right, #eef2ff, #fbe9e9);
+        }
+        .profile-icon {
+            font-size: 28px;
+            padding: 10px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            color: #1e3a8a;
+            margin-right: 15px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .greeting h1 {
+            font-size: 1.2em;
+            margin: 0;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+        .greeting p {
+            font-size: 0.9em;
+            margin: 0;
+            color: #4b5563;
+            line-height: 1.4;
+        }
+
+        /* Quick Actions Section */
+        .quick-actions {
+            padding: 20px;
+        }
+        .quick-actions h2 {
+            font-size: 1.1em;
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .action-card {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        .action-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Card Colors */
+        .card-green { background-color: #ebf8f5; }
+        .card-blue { background-color: #e8f1fd; }
+        .card-red { background-color: #fbe9e9; }
+        .card-purple { background-color: #f5eef7;}
+
+        .card-icon {
+            font-size: 24px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        .card-text strong {
+            display: block;
+            font-size: 1em;
+            margin-bottom: 3px;
+            font-weight: bold;
+        }
+        .card-text span {
+            font-size: 0.85em;
+            color: #6b7280;
+        }
+
+
+        /* Summary Section */
+        .summary-section {
+            padding: 0 20px 20px;
+        }
+        .summary-section h2 {
+            font-size: 1.1em;
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .summary-row {
+            display: flex;
+            gap: 10px;
+        }
+        .summary-card {
+            flex: 1;
+            padding: 20px 10px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Summary Card Colors */
+        .summary-green-bg { background-color: #ecfdf3; }
+        .summary-blue-bg { background-color: #eef5ff; }
+
+        .summary-number {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .summary-card h3 {
+            font-size: 0.9em;
+            color: #374151;
+            margin: 0;
+            font-weight: 600;
+        }
+        /* Icon Colors */
+        .icon-green { color: #34d399; }
+        .icon-blue { color: #60a5fa; }
+
+        /* --- CHATBOT/COMMUNITY FORUM STYLES --- */
+        #community-forum {
+            background: #fefefe;
+            padding: 20px;
+            border-radius: 24px;
+            margin: 30px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        #community-forum h2 {
+            color: #031224;
+            font-weight: 600;
+        }
+
+        #community-forum p {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* Chat container */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 15px;
+            background: #e0f2fe;
+            border-radius: 20px;
+            scroll-behavior: smooth;
+        }
+
+        /* Chat bubble common */
+        .chat-container .message {
+            max-width: 75%;
+            padding: 10px 14px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        /* Volunteer messages (left) */
+        .chat-container .message.volunteer {
+            background: #bfdbfe;
+            color: #031224;
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+
+        /* PwD member messages (right) */
+        .chat-container .message.pwd {
+            background: #031224;
+            color: #f1f3f2;
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+
+        /* Small timestamp */
+        .chat-container .message span.time {
+            display: block;
+            font-size: 10px;
+            opacity: 0.7;
+            margin-top: 4px;
+            text-align: right;
+            color: inherit;
+        }
+
+        /* Message Input Area Styles */
+        .chat-input-area {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        #chat-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        #chat-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 1px #3b82f6;
+        }
+        #send-button {
+            background-color: #3b82f6;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        #send-button:hover {
+            background-color: #2563eb;
+        }
+        
+        /* ⭐ VOICE INTEGRATION STYLES ⭐ */
+        #mic-button {
+            background-color: #60a5fa;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+            flex-shrink: 0;
+            line-height: 1;
+            font-size: 1.2em;
+        }
+        #mic-button:hover {
+            background-color: #3b82f6;
+        }
+        /* Style for when the microphone is actively listening */
+        #mic-button.listening {
+            background-color: #ef4444;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+
+
+        /* Fade-in animation */
+        body {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        body.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="nav-bar-vertical">
+            <div class="nav-title">Inclusiphere</div>
+            
+            <a href="#" class="nav-item-vertical active" id="dashboard-link">
+                <span class="nav-icon-vertical">🏠</span>
+                Dashboard
+            </a>
+            <a href="#" class="nav-item-vertical" id="schedule-meetings-link">
+                <span class="nav-icon-vertical">📅</span>
+                Schedule Meetings
+            </a>
+            <a href="#" class="nav-item-vertical" id="voice-assistance-link">
+                <span class="nav-icon-vertical">🎤</span>
+                Voice Assistance
+            </a>
+            <a href="#" class="nav-item-vertical" id="profile-settings-link">
+                <span class="nav-icon-vertical">👤</span>
+                Profile Settings
+            </a>
+        </div>
+
+        <div class="main-content">
+
+            <div class="header">
+                <span class="profile-icon">👤</span>
+                <div class="greeting">
+                    <h1>Welcome Back!!</h1>
+                    <p>Access your resources and community tools</p>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <h2>Quick Actions</h2>
+
+                <div class="action-card card-green">
+                    <span class="card-icon">🆘</span>
+                    <div class="card-text">
+                        <strong>Raise Immediate Help</strong>
+                        <span>Request urgent assistance from a volunteer</span>
+                    </div>
+                </div>
+
+                <div class="action-card card-red">
+                    <span class="card-icon">💰</span>
+                    <div class="card-text">
+                        <strong>Government Schemes</strong>
+                        <span>View eligibility and apply for aid programs</span>
+                    </div>
+                </div>
+
+                <div class="action-card card-blue">
+                    <span class="card-icon">💬</span>
+                    <div class="card-text">
+                        <strong>Community Forum</strong>
+                        <span>Discuss, share, and connect with other members</span>
+                    </div>
+                </div>
+
+                <div class="action-card card-purple">
+                    <span class="card-icon">🗓️</span>
+                    <div class="card-text">
+                        <strong>Conversation with Volunteers</strong>
+                        <span>Schedule new meetings or view existing sessions</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h2>Activity Overview</h2>
+                <div class="summary-row">
+
+                    <div class="summary-card summary-green-bg">
+                        <span class="summary-number icon-green">🙋</span>
+                        <h3>Helps Raised</h3>
+                        <p style="font-size:0.9em; color:#6b7280; margin-top:5px;">5 Problems raised,4 helps received</p>
+                    </div>
+
+                    <div class="summary-card summary-blue-bg">
+                        <span class="summary-number icon-blue">📆</span>
+                        <h3>Meetings Scheduled</h3>
+                        <p style="font-size:0.9em; color:#6b7280; margin-top:5px;">2 Meetings this week</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="community-forum">
+                <h2>Community Support Chat</h2>
+                <p>Type, speak, or click to send a message.</p>
+
+                <div class="chat-container" id="chat-messages">
+                    <div class="message volunteer">
+                        Hello! I am the Inclusiphere volunteer AI. How can I assist you with resources, scheduling, or government schemes today?
+                        <span class="time">2:20 PM</span>
+                    </div>
+                    <div class="message pwd">
+                        Hi, I'm trying to figure out which government schemes I qualify for based on my state.
+                        <span class="time">2:22 PM</span>
+                    </div>
+                    <div class="message volunteer">
+                        I can certainly help! Please share your state name and I will pull up the relevant schemes and eligibility criteria.
+                        <span class="time">2:23 PM</span>
+                    </div>
+                    <div class="message pwd">
+                        Thank you! I live in Maharashtra, India.
+                        <span class="time">2:25 PM</span>
+                    </div>
+                    </div>
+
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type your message or press 🎙️ to speak...">
+                    <button id="mic-button">🎙️</button>
+                    <button id="send-button">Send</button>
+                </div>
+                </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth transition on load
+        window.addEventListener("load", () => {
+            document.body.classList.add("loaded");
+        });
+
+        // ⭐ JAVASCRIPT FOR CHAT, VOICE RECOGNITION (Input), AND SPEECH SYNTHESIS (Output) ⭐
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatInput = document.getElementById('chat-input');
+            const sendButton = document.getElementById('send-button');
+            const micButton = document.getElementById('mic-button');
+            const chatMessages = document.getElementById('chat-messages');
+            
+            // Link Elements
+            const voiceLink = document.getElementById('voice-assistance-link');
+            const scheduleLink = document.getElementById('schedule-meetings-link'); // **CHANGE 2: Select the Schedule link**
+            const dashboardLink = document.getElementById('dashboard-link');
+
+            const communityForum = document.getElementById('community-forum');
+            
+            // --- Voice Recognition Setup (Input) ---
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            let recognition;
+            let finalTranscript = '';
+            let isListening = false;
+
+            if (SpeechRecognition) {
+                recognition = new SpeechRecognition();
+                recognition.continuous = false; 
+                recognition.interimResults = true; 
+                recognition.lang = 'en-US'; 
+            } else {
+                micButton.style.display = 'none';
+                console.warn('Web Speech API is not supported in this browser.');
+            }
+            
+            // --- Speech Synthesis Setup (Output) ---
+            const synth = window.speechSynthesis;
+
+            // Helper to remove active class from all nav items
+            const setActiveNav = (activeLink) => {
+                document.querySelectorAll('.nav-item-vertical').forEach(item => {
+                    item.classList.remove('active');
+                });
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            };
+            
+            /**
+             * Function to speak a given text aloud.
+             * @param {string} text The text string to be spoken.
+             */
+            const speakMessage = (text) => {
+                if (synth.speaking) {
+                    synth.cancel();
+                }
+
+                if (text.trim() !== '') {
+                    // Strip Markdown for better speech synthesis
+                    const plainText = text.replace(/\*\*(.*?)\*\*/g, '$1'); 
+                    const utterance = new SpeechSynthesisUtterance(plainText);
+                    utterance.pitch = 1.0; 
+                    utterance.rate = 1.0; 
+                    
+                    synth.speak(utterance);
+                }
+            };
+
+            // Function to get current time in HH:MM AM/PM format
+            const getCurrentTime = () => {
+                const now = new Date();
+                const hours = now.getHours();
+                const minutes = now.getMinutes();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                const formattedHours = hours % 12 || 12; 
+                const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+                return `${formattedHours}:${formattedMinutes} ${ampm}`;
+            };
+            
+            /**
+             * Handles the simulated response from the volunteer (Mock API).
+             * @param {string} userQuery The user's input message.
+             */
+            const volunteerReply = (userQuery) => { 
+                const normalizedQuery = userQuery.toLowerCase();
+                let replyText = "I'm sorry, I don't quite understand that request yet. Can you ask about government schemes, scheduling a meeting, or community resources?";
+
+                // Use a sequence of if/else if for clear, non-overlapping logic
+                
+                // 1. URGENT HELP LOGIC
+                if (normalizedQuery.includes("raise help") || normalizedQuery.includes("immediate")|| normalizedQuery.includes("help") || normalizedQuery.includes("emergency") || normalizedQuery.includes("urgent")) {
+                    replyText = "🆘 **Immediate Help Alert Raised.** Your situation has been flagged as urgent. A dedicated volunteer has been notified and will contact you via your registered phone number or video call within the next 5 minutes. Please stay safe.";
+                }
+
+                // 2. SCHEDULING LOGIC
+                else if (normalizedQuery.includes("already scheduled meetings")) {
+                    replyText = "Sure, I found your next scheduled meeting: **Monday at 5:00 PM** with Volunteer **Kirti Sinha**. You can reschedule or book a new one by typing 'schedule new meeting'.";
+                }
+                else if (normalizedQuery.includes("schedule") || normalizedQuery.includes("new meeting") || normalizedQuery.includes("call")) {
+                    replyText = "Your new meeting is scheduled! You will receive a confirmation email with the time, date, and video conferencing link shortly. Is there anything else I can prepare for this meeting?";
+                } 
+                
+                // 3. SCHEMES LOGIC
+                else if (normalizedQuery.includes("scheme") || normalizedQuery.includes("aid")) {
+                    
+                    if (normalizedQuery.includes("maharashtra")) {
+                        replyText = "For **Maharashtra**, key schemes include the Sanjay Gandhi Niradhar Anudan Yojana and the Scholarship Scheme for students. You can find official links on the state Divyang Kalyan Department website.";
+                    } else if (normalizedQuery.includes("karnataka") || normalizedQuery.includes("karnatka")) {
+                        replyText = "For **Karnataka** look into the Manasvini Scheme (financial support) and programs by the Department for the Empowerment of Differently Abled and Senior Citizens. We can provide direct application links.";
+                    } else if (normalizedQuery.includes("delhi") || normalizedQuery.includes("ncr")) {
+                        replyText = "In **Delhi**, the flagship scheme is the Disability Pension Scheme, and various transport subsidies are available. I recommend checking the Department of Social Welfare portal for forms.";
+                    } else if (normalizedQuery.includes("andhra pradesh") || normalizedQuery.includes("ap")) {
+                        replyText = "For **Andhra Pradesh**, the major program is the YSR PENSION KANUKA (SADAREM) for financial aid. Please visit the AP Social Security Pensions website for details.";
+                    } else if (normalizedQuery.includes("telangana") || normalizedQuery.includes("ts")) {
+                        replyText = "For **Telangana**, key programs include the Aasara Pension for financial assistance and the Economic Rehabilitation Scheme for livelihood support. You can check the Women Development & Child Welfare Department website for details.";
+                    } else {
+                        // Default response if no specific state is mentioned
+                        replyText = "Since there are no specific state schemes mentioned, here are the major **Central Government Schemes**: UDID Card (mandatory ID), Accessible India Campaign, and the National Fellowship for PwDs.";
+                    }
+                }
+                
+                // 4. COMMUNITY/GENERAL LOGIC
+                else if (normalizedQuery.includes("community") || normalizedQuery.includes("forum") || normalizedQuery.includes("connect")|| normalizedQuery.includes("share")|| normalizedQuery.includes("tell")|| normalizedQuery.includes("story")) {
+                    replyText = "The Inclusiphere Community Forum is an excellent resource for sharing experiences. You can add your content on the main Dashboard to share it with everyone!! Do you need a direct link to a specific resource?";
+                } else if (normalizedQuery.includes("thank") || normalizedQuery.includes("thanks")) {
+                    replyText = "You're very welcome! Is there anything else I can assist you with today?";
+                } else if (normalizedQuery.includes("hey") || normalizedQuery.includes("hello")|| normalizedQuery.includes("hi") || normalizedQuery.includes("greetings")) {
+                    replyText = "Greetings, how may I assist you?"
+                }
+
+                // --- End of Enhanced Mock API Logic ---
+                
+                // 1. Show the response message
+                const messageElement = document.createElement('div');
+                messageElement.className = 'message volunteer';
+                messageElement.innerHTML = `${replyText}<span class="time">${getCurrentTime()}</span>`;
+                chatMessages.appendChild(messageElement);
+
+                // 2. Scroll to the bottom 
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // 3. THE TEXT-TO-SPEECH STEP
+                speakMessage(replyText);
+            };
+
+            // Main function to send the message
+            const sendMessage = (textToSend = null) => {
+                const messageText = textToSend || chatInput.value.trim();
+
+                if (messageText === '') {
+                    return;
+                }
+                
+                // Cancel ongoing speech when the user sends a new message
+                if (synth.speaking) {
+                    synth.cancel();
+                }
+
+                // 1. Create the new user message element
+                const messageElement = document.createElement('div');
+                messageElement.className = 'message pwd';
+                
+                // 2. Set the content
+                messageElement.innerHTML = `
+                    ${messageText}
+                    <span class="time">${getCurrentTime()}</span>
+                `;
+
+                // 3. Append the new message
+                chatMessages.appendChild(messageElement);
+
+                // 4. Clear the input field if it was manually typed
+                if (!textToSend) { 
+                    chatInput.value = '';
+                }
+
+                // 5. Scroll to the bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                // Reset finalTranscript after sending
+                finalTranscript = '';
+                
+                // 6. Trigger the mocked Gemini response
+                volunteerReply(messageText);
+            };
+
+
+            // --- Voice Recognition Event Listeners ---
+
+            if (recognition) {
+                micButton.addEventListener('click', () => {
+                    try {
+                        if (isListening) {
+                            recognition.stop();
+                        } else {
+                            finalTranscript = ''; 
+                            chatInput.value = ''; 
+                            recognition.start(); 
+                        }
+                    } catch (e) {
+                        console.error('Speech Recognition Start Error:', e);
+                        micButton.classList.remove('listening');
+                        isListening = false;
+                    }
+                });
+
+                recognition.onstart = () => {
+                    isListening = true;
+                    micButton.classList.add('listening');
+                    chatInput.placeholder = '🎙️ Listening... speak now.';
+                    if (synth.speaking) {
+                        synth.cancel();
+                    }
+                };
+
+                recognition.onresult = (event) => {
+                    let interimTranscript = '';
+                    finalTranscript = '';
+
+                    for (let i = event.resultIndex; i < event.results.length; ++i) {
+                        const transcript = event.results[i][0].transcript;
+                        if (event.results[i].isFinal) {
+                            finalTranscript += transcript;
+                        } else {
+                            interimTranscript += transcript;
+                        }
+                    }
+
+                    chatInput.value = finalTranscript || interimTranscript;
+                };
+
+                recognition.onend = () => {
+                    isListening = false;
+                    micButton.classList.remove('listening');
+                    chatInput.placeholder = 'Type your message or press 🎙️ to speak...';
+
+                    if (finalTranscript.trim().length > 0) {
+                        sendMessage(finalTranscript.trim());
+                    }
+                };
+
+                recognition.onerror = (event) => {
+                    isListening = false;
+                    micButton.classList.remove('listening');
+                    chatInput.placeholder = 'Type your message or press 🎙️ to speak...';
+                    console.error('Speech Recognition Error:', event.error);
+                    if (event.error === 'not-allowed') {
+                        alert("Microphone access denied. Please allow microphone usage in your browser settings to use voice input.");
+                    } else if (event.error !== 'aborted') {
+                        alert(`Speech Recognition Error: ${event.error}. Please try again.`);
+                    }
+                };
+            }
+
+
+            // --- Standard Chat Event Listeners ---
+
+            sendButton.addEventListener('click', () => sendMessage());
+
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // --- Navigation Link Event Listeners ---
+
+            // Voice Assistance Link Listener
+            voiceLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                setActiveNav(voiceLink);
+                communityForum.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                chatInput.value = '';
+                chatInput.focus();
+            });
+            
+            // **Schedule Meetings Link Listener**
+            scheduleLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                setActiveNav(scheduleLink); // Set this link as active
+                communityForum.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Simulate the "already scheduled meetings" query
+                sendMessage("already scheduled meetings"); 
+                chatInput.focus();
+            });
+
+            // Dashboard Link Listener 
+            dashboardLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                setActiveNav(dashboardLink);
+            });
+        });
+    </script>
+
+</body>
+</html>
