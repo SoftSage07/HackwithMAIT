@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Dashboard</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+        }
+
+        .container {
+            max-width: 1000px;
+            min-height: 100vh;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+     
+        .nav-bar-vertical {
+            width: 220px; /* Sidebar width */
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            padding-top: 30px;
+            background-color: #1e3a8a; /* Deep Blue background */
+            color: #ffffff;
+            height: 100vh; /* Full height sidebar */
+            position: sticky;
+            top: 0;
+            overflow-y: auto; /* Allow scrolling if many items */
+        }
+        .nav-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        .nav-item-vertical {
+            text-align: left;
+            color: #d1d5db; /* Light gray text */
+            font-size: 1em;
+            text-decoration: none;
+            padding: 15px 20px;
+            transition: background-color 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            border-left: 5px solid transparent;
+        }
+        .nav-item-vertical:hover {
+            background-color: #3b5998;
+            color: #ffffff;
+        }
+        .nav-item-vertical.active {
+            color: #ffffff;
+            background-color: #3b82f6;
+            font-weight: bold;
+            border-left: 5px solid #ffffff;
+        }
+        .nav-icon-vertical {
+            font-size: 1.2em;
+            margin-right: 15px;
+            display: inline-block;
+        }
+
+        /* --- MAIN CONTENT AREA - Mobile Style, Sidebar Adjacent --- */
+        .main-content {
+            flex-grow: 1;
+            max-width: 780px; /* Ensures the content width doesn't stretch infinitely */
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+
+        /* Header (Greeting) Style - Retained Mobile/Stacked look */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(to right, #eef2ff, #fbe9e9);
+        }
+        .profile-icon {
+            font-size: 28px;
+            padding: 10px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            color: #1e3a8a;
+            margin-right: 15px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .greeting h1 {
+            font-size: 1.2em;
+            margin: 0;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+        .greeting p {
+            font-size: 0.9em;
+            margin: 0;
+            color: #4b5563;
+            line-height: 1.4;
+        }
+
+        /* Quick Actions Section - Retained Mobile/Stacked look */
+        .quick-actions {
+            padding: 20px;
+        }
+        .quick-actions h2 {
+            font-size: 1.1em;
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .action-card {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        .action-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Card Colors */
+        .card-green { background-color: #ebf8f5; }
+        .card-blue { background-color: #e8f1fd; }
+        .card-red { background-color: #fbe9e9; }
+        .card-purple { background-color: #f5eef7;}
+
+        .card-icon {
+            font-size: 24px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        .card-text strong {
+            display: block;
+            font-size: 1em;
+            margin-bottom: 3px;
+            font-weight: bold;
+        }
+        .card-text span {
+            font-size: 0.85em;
+            color: #6b7280;
+        }
+
+
+        /* Summary Section - Retained Mobile/Stacked look */
+        .summary-section {
+            padding: 0 20px 20px;
+        }
+        .summary-section h2 {
+            font-size: 1.1em;
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .summary-row {
+            display: flex;
+            gap: 10px;
+        }
+        .summary-card {
+            flex: 1;
+            padding: 20px 10px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Summary Card Colors */
+        .summary-green-bg { background-color: #ecfdf3; }
+        .summary-blue-bg { background-color: #eef5ff; }
+
+        .summary-number {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .summary-card h3 {
+            font-size: 0.9em;
+            color: #374151;
+            margin: 0;
+            font-weight: 600;
+        }
+        /* Icon Colors */
+        .icon-green { color: #34d399; }
+        .icon-blue { color: #60a5fa; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- VERTICAL NAVIGATION BAR (SIDEBAR) -->
+        <div class="nav-bar-vertical">
+            <div class="nav-title">Inclusiphere</div>
+            <a href="#" class="nav-item-vertical active">
+                <span class="nav-icon-vertical">🏠</span>
+                Dashboard
+            </a>
+            <a href="#" class="nav-item-vertical">
+                <span class="nav-icon-vertical">📅</span>
+                Schedule Meetings
+            </a>
+            <a href="#" class="nav-item-vertical">
+                <span class="nav-icon-vertical">🎤</span>
+                Voice Assistance
+            </a>
+            <a href="#" class="nav-item-vertical">
+                <span class="nav-icon-vertical">👤</span>
+                Profile Settings
+            </a>
+        </div>
+
+        <!-- MAIN DASHBOARD CONTENT -->
+        <div class="main-content">
+
+            <!-- HEADER - Mobile Style (Text on Two Lines) -->
+            <div class="header">
+                <span class="profile-icon">👤</span>
+                <div class="greeting">
+                    <h1>Welcome Back!!</h1>
+                    <p>Access your resources and community tools</p>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <h2>Quick Actions</h2>
+
+                <div class="action-card card-green">
+                    <span class="card-icon">🆘</span>
+                    <div class="card-text">
+                        <strong>Raise Immediate Help</strong>
+                        <span>Request urgent assistance from a volunteer</span>
+                    </div>
+                </div>
+
+                <div class="action-card card-red">
+                    <span class="card-icon">💰</span>
+                    <div class="card-text">
+                        <strong>Government Schemes</strong>
+                        <span>View eligibility and apply for aid programs</span>
+                    </div>
+                </div>
+
+                <div class="action-card card-blue">
+                    <span class="card-icon">💬</span>
+                    <div class="card-text">
+                        <strong>Community Forum</strong>
+                        <span>Discuss, share, and connect with other members</span>
+                    </div>
+                </div>
+
+                <div class="action-card card-purple">
+                    <span class="card-icon">🗓️</span>
+                    <div class="card-text">
+                        <strong>Conversation with Volunteers</strong>
+                        <span>Schedule new meetings or view existing sessions</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h2>Activity Overview</h2>
+                <div class="summary-row">
+
+                    <!-- Summary Card 1: Problems Raised (Heart/Light Green) -->
+                    <div class="summary-card summary-green-bg">
+                        <span class="summary-number icon-green">🙋</span>
+                        <h3>Problems Raised</h3>
+                      <p style="font-size:0.9em; color:#6b7280; margin-top:5px;">3 Problems raised</p>
+                        
+                    </div>
+
+                    <!-- Summary Card 2: Meetings Scheduled (Link/Light Blue) -->
+                    <div class="summary-card summary-blue-bg">
+                        <span class="summary-number icon-blue">📅</span>
+                        <h3>Meetings Scheduled</h3>
+                        <p style="font-size:0.9em; color:#6b7280; margin-top:5px;">2 Meetings this week</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
